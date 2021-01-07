@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Registration and Login App</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <a class="navbar-brand" href="#">Travel Agency</a>
+        <a class="navbar-brand" href="#" th:href="@{/}">Home</a>
+        <a class="navbar-brand" href="#" th:href="@{/posts}">Profile</a>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="form-group">
+                <th:block th:each="post : ${homeposts}">
+                    <legend>
+                        <p><strong><span th:text="${post.user.firstName+' '+post.user.lastName}"></span></strong> </p>
+                        <p><strong><span th:text="${post.title}"></span></strong> </p>
+                        <p><strong><span th:text="${post.content}"></span></strong> </p>
+                        <p><strong><span th:text="${post.location.locationName}"></span></strong> </p>
+                    </legend>
+                    <br>
+                    <br>
+                </th:block>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

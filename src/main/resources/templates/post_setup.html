@@ -1,0 +1,79 @@
+<!--</html>-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <a class="navbar-brand" href="#">Travel Agency</a>
+        <a class="navbar-brand" href="#" th:href="@{/}">Home</a>
+        <a class="navbar-brand" href="#" th:href="@{/posts}">Profile</a>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <form th:action="@{/post}" method="post" th:object="${postdto}">
+                        <div class="form-group">
+                            <label class="control-label" for="title"> Title </label>
+                            <input id="title" class="form-control" th:field="*{title}"
+                                   required autofocus="autofocus" />
+                            <input type="hidden" th:field="*{id}" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="content"> Content </label> <input
+                                id="content" class="form-control" th:field="*{content}"
+                                required autofocus="autofocus" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 col-form-label">Location</label>
+                            <div class="col-sm-9">
+                                <select type="text" th:field ="*{location.id}"  class="form-control">
+                                    <option value="">choose..</option>
+                                    <option th:each="locations: ${locationdtos}"
+                                            th:value="${locations.id}"
+                                            th:text="${locations.locationName}"></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios"  th:field="*{isPrivate}"  id="optionsRadios1" th:value="public">
+                                    Public
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" th:field="*{isPrivate} " id="optionsRadios2" th:value="private">
+                                    Private
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-info col-2">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</body>
+</html>
+
